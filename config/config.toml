@@ -1,0 +1,2 @@
+db_connection_string = "host=db port=5432 user=postgres password=stronguserpassword dbname=payment-system sslmode=disable TimeZone=Europe/Madrid"
+db_driver = "postgres"

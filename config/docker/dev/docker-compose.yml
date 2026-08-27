@@ -1,0 +1,31 @@
+name: payment-system
+
+services:
+  web:
+    image: nginx
+    container_name: "payment-system-web"
+    ports:
+      - "8001:80"
+    volumes:
+      - ../../nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+  app:
+    build: .
+    container_name: "payment-system-app"
+    expose:
+      - 5000
+    working_dir: /app
+    command: "air -c .air.toml"
+    volumes:
+      - ../../../src:/app
+      - ../../config.toml:/app/config.toml
+      - ./.air.toml:/app/.air.toml
+
+  db:
+    image: postgres
+    container_name: "payment-system-db"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=stronguserpassword
+      - POSTGRES_DB=payment-system
